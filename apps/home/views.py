@@ -114,7 +114,7 @@ def uploadfromfileerror(request):
 
 def autoadd(filename,user):
     filename0 = str(filename).replace(' ','_')
-    dir0 = os.path.join(os.getcwd(), "apps/static/mediaurl/fileupload")
+    dir0 = os.path.join(os.getcwd(), "core/staticfiles/mediaurl/fileupload")
     dir1 = os.path.join(dir0,filename0)
 
     df0 = pd.read_excel(dir1)
