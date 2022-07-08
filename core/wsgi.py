@@ -1,5 +1,5 @@
 import os
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "proyecto_www.settings.staging")
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "django.core")
 from django.core.wsgi import get_wsgi_application
-from dj_static import Cling
-application = Cling(get_wsgi_application())
+
+application = get_wsgi_application()

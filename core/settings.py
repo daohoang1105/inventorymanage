@@ -141,14 +141,14 @@ USE_TZ = True
 STATIC_ROOT = os.path.join(CORE_DIR, 'staticfiles')
 STATIC_URL = '/static/'
 
-MEDIA_URL = '/mediaurl/'
+
 MEDIA_ROOT = os.path.join(CORE_DIR, 'apps/static/mediaurl')
+MEDIA_URL = '/mediaurl/'
 # Extra places for collectstatic to find static files.
 STATICFILES_DIRS = (
     os.path.join(CORE_DIR, 'apps/static'),
 )
 
-STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
 #############################################################
 #############################################################
 django_heroku.settings(locals())
