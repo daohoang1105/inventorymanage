@@ -12,3 +12,4 @@ django-environ==0.8.1
 pandas
 django-heroku
 django-crispy-forms
+pillow
