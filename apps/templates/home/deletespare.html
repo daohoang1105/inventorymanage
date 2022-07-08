@@ -1,0 +1,68 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} UI Tables {% endblock %} 
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+{% block content %}
+
+<section class="pcoded-main-container">
+    <div class="pcoded-content">
+        <!-- [ breadcrumb ] start -->
+        <div class="page-header">
+            <div class="page-block">
+                <div class="row align-items-center">
+                    <div class="col-md-12">
+                        <div class="page-header-title">
+                            <h5 class="m-b-10">Update Spare Parts {{spare.id}} : {{spare.partCode}} </h5>
+                        </div>
+                        <ul class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="{% url 'sptable' %}"><i class="feather icon-home"></i></a></li>
+                            
+                            <li class="breadcrumb-item"><a href="#!">Form Update</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- [ breadcrumb ] end -->
+        <!-- [ Main Content ] start -->
+        <div class="row">
+            <!-- [ form-element ] start -->
+            <div class="col-sm-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h5>Basic Update</h5>
+                    </div>
+                    <div class="card-body">
+                        <h5>Form Update</h5>
+                        <hr>
+                        <div class="row">
+                            <div class="col-md-6">                                
+                                <form method="POST" action="">
+                                    {% csrf_token %}
+                                    <p>Are you sure you want to delete "{{obj}}"?</p>
+                                    <a href="{{request.META.HTTP_REFERER}}">Go Back</a>
+                                    <input type="submit" value="Confirm" />
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- [ form-element ] end -->
+        </div>
+        <!-- [ Main Content ] end -->
+
+    </div>
+</section>
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}{% endblock javascripts %}
+
+
+
+
+

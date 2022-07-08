@@ -1,0 +1,131 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} UI Tables {% endblock %} 
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+{% block content %}
+
+<section class="pcoded-main-container">
+    <div class="pcoded-content">
+        <!-- [ breadcrumb ] start -->
+        <div class="page-header">
+            <div class="page-block">
+                <div class="row align-items-center">
+                    <div class="col-md-12">
+                        <div class="page-header-title">
+                            <h5 class="m-b-10">Update Spare Parts {{spare.id}} : {{spare.partCode}} </h5>
+                        </div>
+                        <ul class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="{% url 'sptable' %}"><i class="feather icon-home"></i></a></li>
+                            <li class="breadcrumb-item"><a href="{% url 'spmanage' spare.id %}"> {{spare.id}} : {{spare.partCode}}</a></li>
+                            <li class="breadcrumb-item"><a href="#!">Form Update</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- [ breadcrumb ] end -->
+        <!-- [ Main Content ] start -->
+        <div class="row">
+            <!-- [ form-element ] start -->
+            <div class="col-sm-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h5>Basic Update</h5>
+                    </div>
+                    <div class="card-body">
+                        <h5>Form Update</h5>
+                        <hr>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <form action="" method="POST" enctype="multipart/form-data">
+                                    {% csrf_token %}
+                                    <div class="form-group">
+                                        <label for="partCode">Part Code</label>
+                                        {{form.partCode}}
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="goodStatus">Good Status</label>
+                                        {{form.goodStatus}}
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="sparePartType">Spare Part Type</label>
+                                        {{form.sparePartType}}
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="csceHWMO">CSCE HWMO</label>
+                                        {{form.csceHWMO}}
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="serialNumber">Serial Number</label>
+                                        {{form.serialNumber}}
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="productDescription">Product Description</label>
+                                        {{form.productDescription}}
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="deliverDate">Deliver Date</label>
+                                        {{form.deliverDate}}
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="warehouse">warehouse</label>
+                                        {{form.warehouse}}
+                                    </div>
+                                    <hr>
+                                    <button type="submit" class="btn  btn-primary" value="Submit" name="mybtn" onclick="check();">Submit</button>
+                                
+                            </div>
+                            <div class="col-md-6">
+                                
+                                    <div class="form-group">
+                                        <label>Sender</label>
+                                        {{form.sender}}
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Invoice</label>
+                                        {{form.invoice}}
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Batch</label>
+                                        {{form.batch}}
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Transit Way</label>
+                                        {{form.transitWay}}
+                                    </div> 
+                                    <div class="form-group">
+                                        <label>Actual QTY</label>
+                                        {{form.actualQTY}}
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Consume QTY</label>
+                                        {{form.consumQTY}}
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Reamin QTY</label>
+                                        {{form.remainQTY}}
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <label for="exampleFormControlTextarea1">Remark</label>
+                                        {{form.remark}}
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- [ form-element ] end -->
+        </div>
+        <!-- [ Main Content ] end -->
+
+    </div>
+</section>
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}{% endblock javascripts %}

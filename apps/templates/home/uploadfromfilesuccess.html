@@ -1,0 +1,45 @@
+{% extends "layouts/base.html" %}
+{% block stylesheets %}
+
+{% endblock stylesheets %}
+{% block content %}
+<section class="pcoded-main-container">
+    <div class="pcoded-content">
+        <!-- [ breadcrumb ] start -->
+        <div class="page-header">
+            <div class="page-block">
+                <div class="row align-items-center">
+                    <div class="col-md-12">
+                        <div class="page-header-title">
+                            <h5>Upload data from file</h5>
+                        </div>
+                        <div>
+                            <div class="alert alert-success" role="alert">
+								Upload successful! Return to main page after <span id="countdown">5</span> seconds
+							</div>
+                        </div>
+</div></div></div></div></div></section>
+{% endblock content %}
+{% block javascripts %}
+<title>JavaScript 5 Seconds Countdown</title>
+<script language="javascript">
+var max_time = 5;
+var cinterval;
+ 
+function countdown_timer(){
+  // decrease timer
+  max_time--;
+  document.getElementById('countdown').innerHTML = max_time;
+  if(max_time == 0){
+    clearInterval(cinterval);
+  }
+}
+// 1,000 means 1 second.
+cinterval = setInterval('countdown_timer()', 1000);
+</script>
+<script>
+    setTimeout(function(){
+            window.location.href = 'http://127.0.0.1:8000';
+        }, 5500);
+</script>
+{% endblock javascripts %}

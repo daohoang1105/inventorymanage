@@ -1,0 +1,229 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} UI Tables {% endblock %} 
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}
+<style>
+    #myTables tr {
+    display: none;
+    }
+    #pagination ul li {
+    display: inline;
+    margin-left: 10px;
+    width: 100%;
+    }
+</style>
+{% endblock stylesheets %}
+
+{% block content %}
+
+    <!-- [ Main Content ] start -->
+    <section class="pcoded-main-container">
+        <div class="pcoded-content">
+            <!-- [ breadcrumb ] start -->
+            <div class="page-header">
+                <div class="page-block">
+                    <div class="row align-items-center">
+                        <div class="col-md-12">
+                            <div class="page-header-title">
+                                <h5 class="m-b-10">List Request Tables</h5>
+                            </div>
+                            <ul class="breadcrumb">
+                                <li class="breadcrumb-item"><a href="/"><i class="feather icon-home"></i></a></li>
+                                <li class="breadcrumb-item"><a href="#">Request Table</a></li>
+                                <li class="breadcrumb-item"><a href="#">All Spare Part Request</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- [ breadcrumb ] end -->
+            <div class="page-header">
+                <div class="page-block">
+                    <div class="row align-items-center">
+                        <div class="col-md-12">
+                            <div class="page-header-title">
+                                <h5 class="m-b-10">Auto Request</h5>
+                            </div>
+                            
+                                
+                                    <div class="card-header">
+                                        
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                            <form action="" method="POST" enctype="multipart/form-data">
+                                                {% csrf_token %}
+                                                <select class="form-control" name="warehouse" id="warehouse">
+                                                    <option value="HCM">HCM</option>
+                                                    <option value="HN">HN</option>
+                                                    <option value="DN">DN</option>
+                                                    <option value="KH">KH</option>
+                                                    <option value="HN">Other</option>
+                                                </select><br>
+                                                <select class="form-control" name="goodStatus" id="goodStatus">
+                                                    <option value="Good">Good</option>
+                                                    <option value="New">New</option>
+                                                    <option value="Fail">Fail</option>
+                                                    <option value="Scrap">Scrap</option>
+                                                    <option value="Other">Other</option>
+                                                </select><br>
+                                                <input class="form-control" name="SparePartCode" placeholder="Part Code..."/><br>
+                                                <input class="form-control" type="number" name="outqty" placeholder="outqty..."/><br>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <input class="form-control" type="date" name="outDate" placeholder="outDate..."/><br>
+                                                <input class="form-control" type="text" name="outReceiver" placeholder="outReceiver..."/><br>
+                                            
+                                                <input class="form-control" type="text" name="outRemark" placeholder="outRemark..."><br>
+                                                <input class="form-control" name="reportfile" type="file" id="file"/><br>
+                                                <button class="btn  btn-success" type="submit">Add new request</button>
+                                              </form>
+                                            </div></div>
+                                              <br>
+                                              {% if requestsuccess == 0 %}
+                                              <div class="alert alert-danger" role="alert">Request Failed</div>
+                                              {% elif requestsuccess == 1 %}
+                                              <div class="alert alert-success" role="alert">Request Successed</div>
+                                              {% endif %}
+                                        </div>
+                                    </div>
+                                
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- [ Main Content ] start -->
+            <div class="pcoded-content">
+            <div class="row">
+                <!-- [ Hover-table ] start -->
+                <div class="col-xl-12">
+                    <div class="card">
+                        <div class="card-header">
+                            
+                        </div>
+                        <div class="card-body text-center">
+                            <div class="row justify-content-center">
+                                <div class="col-sm-6">
+                                    <input type="text" id="icon-search" class="form-control mb-4" onkeyup="searchTableColumns()" placeholder="search . . ">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body table-border-style">
+                            <div class="table-responsive">
+                                <table class="table table-hover" id="myTable">
+                                    <thead>
+                                        <tr class="header">
+                                            <th>ID</th>
+                                            <th>Requestor</th>
+                                            <th>Part Code</th>
+                                            <th>Status</th>
+                                            <th>QTY</th>
+                                            <th>Warehouse</th>
+                                            <th>WM</th>
+                                            <th>Boss</th>
+                                            <th>FILE</th>
+                                            <th>GSP CMD</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for d in sprequest %}
+                                        
+                                        <tr>
+                                            <td><a href="{% url 'spmanage' d.sparePartOut.id %}">{{d.id}}</a></td>
+                                            <td>{{d.userOutRequestor}}</td>
+                                            <td>{{d.sparePartOut.partCode}}</td>
+                                            <td>{{d.sparePartOut.goodStatus}}</td>
+                                            <td>{{d.outqty}}</td>
+                                            <td>{{d.sparePartOut.warehouse}}</td>
+                                            <td>{{d.submitByWm}}</td>
+                                            <td>{{d.submitByBoss}} {{d.gsp}} {{d.gspuser}}</td>
+                                            <td><a href="/static/mediaurl/{{d.file}}" download="/static/mediaurl/{{d.file}}">{{d.file}}</a></td>
+                                            <td>
+                                                {% csrf_token %}
+                                                <form action="" method="get">
+                                                    
+                                                    <input type="text" value="{{d.id}}" style="display: none;" name="mytextbox" size="1"/>
+                                                    {% if request.user.role == 3 or request.user.role == 4 %}
+                                                    <input type="text"  name="mygspbox" size="6"/>
+                                                    <input type="submit" class="btn  btn-success" value="Boss Submit" name="mybtn">
+                                                    {% endif %}
+                                                    {% if request.user.role == 2 or request.user.role == 4 %}
+                                                    <input type="submit" class="btn  btn-success" value="WM Submit" name="mybtn2">
+                                                    {% endif %}
+                                                    {% if request.user == d.userOutRequest or request.user.role == 4 %}
+                                                    <input type="submit" class="btn  btn-danger" value="Delete" name="deletebtn" style="color:rgb(255, 255, 255) ;">
+                                                    {% endif %}
+                                                </form>
+                                            </td>
+                                            </tr>
+                                        
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div><br><br>
+                            <center><div id="pagination"></div></center>
+
+                        </div>
+                    </div>
+                </div>
+                <!-- [ Hover-table ] end -->
+            </div>
+        </div>
+            <!-- [ Main Content ] end -->
+        </div>
+    </section>
+    <!-- [ Main Content ] end -->
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}
+<script>
+function searchTableColumns() {
+      // Declare variables 
+      var input, filter, table, tr, i, j, column_length, count_td;
+      column_length = document.getElementById('myTable').rows[0].cells.length;
+      input = document.getElementById("icon-search");
+      filter = input.value.toUpperCase();
+      table = document.getElementById("myTable");
+      tr = table.getElementsByTagName("tr");
+      for (i = 1; i < tr.length; i++) { // except first(heading) row
+        count_td = 0;
+        for(j = 1; j < column_length-1; j++){ // except first column
+            td = tr[i].getElementsByTagName("td")[j];
+            /* ADD columns here that you want you to filter to be used on */
+            if (td) {
+              if ( td.innerHTML.toUpperCase().indexOf(filter) > -1)  {            
+                count_td++;
+              }
+            }
+        }
+        if(count_td > 0){
+            tr[i].style.display = "";
+        } else {
+            tr[i].style.display = "none";
+        }
+      }
+      
+    }
+</script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script src="https://pagination.js.org/dist/2.1.4/pagination.min.js"></script>
+<script>
+let rows = []
+    $('table tbody tr').each(function(i, row) {
+        return rows.push(row);
+    });
+    
+    $('#pagination').pagination({
+        dataSource: rows,
+        pageSize: 10,
+        callback: function(data, apagination) {
+            $('tbody').html(data);
+        }
+    })
+</script>
+
+{% endblock javascripts %}
+

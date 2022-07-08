@@ -1,0 +1,330 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} UI Tables {% endblock %} 
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}
+ 
+{% endblock stylesheets %}
+
+{% block content %}
+
+    <!-- [ Main Content ] start -->
+    <section class="pcoded-main-container">
+        <div class="pcoded-content">
+            <!-- [ breadcrumb ] start -->
+            <div class="page-header">
+                <div class="page-block">
+                    <div class="row align-items-center">
+                        <div class="col-md-12">
+                            <div class="page-header-title">
+                                <h5>Bootstrap Basic Tables</h5>
+                            </div>
+                            <div style="float: right;">
+                                <a href="{% url 'updatespare' spare.id %}"><i class="feather icon-edit"></i></a>
+                                <a href="{% url 'deletespare' spare.id %}"><i class="feather icon-trash-2"></i></a>
+                            </div>
+                            <ul class="breadcrumb">
+                                <li class="breadcrumb-item"><a href="{% url 'home' %}"><i class="feather icon-home"></i></a></li>
+                                <li class="breadcrumb-item"><a href="{% url 'sptable' %}">Spare Part Table</a></li>
+                                <li class="breadcrumb-item"><a href="#">Spare Part {{spare.id}}: {{spare.partCode}}</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- [ breadcrumb ] end -->
+            <!-- [ Main Content ] start -->
+            <div class="row">
+                <div class="col-xl-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5>Spare Part Details</h5><br><br>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <table class="table table-hover">
+                                        <tr>
+                                            <th>ID</th>
+                                            <td>{{spare.id}}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Status</th>
+                                            <td>{{spare.goodStatus}}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Type 1</th>
+                                            <td>{{spare.sparePartType}}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Type 2</th>
+                                            <td>{{spare.csceHWMO}}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>SN</th>
+                                            <td>{{spare.serialNumber}}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Discription</th>
+                                            <td>{{spare.productDescription}}</td>
+                                        </tr><tr>
+                                            <th>Deliver date</th>
+                                            <td>{{spare.deliverDate}}</td>
+                                        </tr><tr>
+                                            <th>warehouse</th>
+                                            <td>{{spare.warehouse}}</td>
+                                        </tr>
+                                    </table>
+                                </div>
+                                <div class="col-md-6">
+                                    <table class="table table-hover">
+                                        <tr>
+                                            <th>Part code</th>
+                                            <td>{{spare.partCode}}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Sender</th>
+                                            <td>{{spare.sender}}</td>
+                                            
+                                        </tr>
+                                        <tr>
+                                            <th>Invoice</th>
+                                            <td>{{spare.invoice}}</td>
+                                            
+                                        </tr>
+                                        <tr>
+                                            <th>Batch</th>
+                                            <td>{{spare.batch}}</td>
+                                            
+                                        </tr>
+                                        <tr>
+                                            <th>Transit Way</th>
+                                            <td>{{spare.transitWay}}</td>
+                                        </tr>
+                                        
+                                        <tr>
+                                            <th>Actual QTY</th>
+                                            <td>{{spare.actualQTY}}</td>
+                                           
+                                        </tr>
+                                        <tr>
+                                            <th>Consum QTY</th>
+                                            <td>{{spare.consumQTY}}</td>
+                                            
+                                        </tr><tr>
+                                            <th>Remain QTY</th>
+                                            <td>{{spare.remainQTY}}</td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div><br>
+                            <h6>Remark</h6>
+                            <span class="form-control" rows="5">{{spare.remark}}</span>
+                                  
+                            </div>
+                        </div>
+                    </div>
+                <!-- [ Hover-table ] start -->
+                <!-- <div class="col-xl-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5>Spare Part Detail</h5>
+                        </div>
+                        <div class="card-body table-border-style">
+                            <div class="table-responsive">
+                                <table class="table table-hover" id="myTable">
+                                    <thead>
+                                        <tr class="header">
+                                            <th>ID</th>
+                                            <th>Part Code</th>
+                                            <th>Status</th>
+                                            <th>SP Type</th>
+                                            <th>CSCE HWMO</th>
+                                            <th>SN</th>
+                                            <th>Description</th>
+                                            <th>Deliver Date</th>
+                                            <th>Warehouse</th>
+                                            <th>Sender</th>
+                                            <th>Invoice</th>
+                                            <th>Batch</th>
+                                            <th>TransitWay</th>
+                                            <th>act QTY</th>
+                                            <th>con QTY</th>
+                                            <th>rem QTY</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>{{spare.id}}</td>
+                                            <td>{{spare.partCode}}</td>
+                                            <td>{{spare.goodStatus}}</td>
+                                            <td>{{spare.sparePartType}}</td>
+                                            <td>{{spare.csceHWMO}}</td>
+                                            <td>{{spare.serialNumber}}</td>
+                                            <td>{{spare.productDescription}}</td>
+                                            <td>{{spare.deliverDate}}</td>
+                                            <td>{{spare.warehouse}}</td>
+                                            <td>{{spare.sender}}</td>
+                                            <td>{{spare.invoice}}</td>
+                                            <td>{{spare.batch}}</td>
+                                            <td>{{spare.transitWay}}</td>
+                                            <td>{{spare.actualQTY}}</td>
+                                            <td>{{spare.consumQTY}}</td>
+                                            <td>{{spare.remainQTY}}</td>
+                                            </tr>
+                                    </tbody>
+                                </table><br>
+                                <h6>Remark</h6>
+                                <textarea class="form-control" rows="5">{{spare.remark}}</textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div> -->
+                <!-- [ Hover-table ] end -->
+                <div class="col-xl-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5> OUT RECORD </h5>
+                        </div>
+                        <div class="card-body table-border-style">
+                            <div class="table-responsive">
+                                <table class="table table-hover" id="Table2">
+                                    <thead>
+                                        <tr class="header">
+                                            <th>ID</th>
+                                            <th>GSP</th>
+                                            <th>User</th>
+                                            <th>QTY</th>
+                                            <th>Date</th>
+                                            <th>Receiver</th>
+                                            <th>File</th>
+                                            <th>Remark</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for spare in spareOut %}
+                                       
+                                        <tr>
+                                            <td>{{spare.id}}</td>
+                                            <td>{{spare.outgsp}}</td>
+                                            <td>{{spare.userOutRequestor}}</td>
+                                            <td>{{spare.outqty}}</td>
+                                            <td>{{spare.outDate}}</td>
+                                            <td>{{spare.outReceiver}}</td>
+                                            <td>{{spare.file}}</td>
+                                            <td>{{spare.outRemark}}</td>
+                                            
+                                        </tr>
+                                        
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                </div>
+                </div>
+                <div class="col-xl-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5>Request Consume Spare Parts</h5><hr>
+                            <div class="row">
+                                <div class="col-md-6">
+                                <form action="" method="POST" enctype="multipart/form-data">
+                                    {% csrf_token %}
+                                    <input class="form-control" type="number" name="outqty" placeholder="outqty..."/><br>
+                                    <input class="form-control" type="date" name="outDate" placeholder="outDate..."/><br>
+                                    <input class="form-control" type="text" name="outReceiver" placeholder="outReceiver..."/>
+                                </div>
+                                <div class="col-md-6">
+                                    <input class="form-control" type="text" name="outRemark" placeholder="outRemark..."><br>
+                                    <input class="form-control" name="reportfile" type="file" id="file"/><br>
+                                    <button class="btn  btn-success" type="submit">Add new request</button>
+                                  </form>
+                                </div></div>
+                                  <br>
+                                  {% if requestsuccess == 1 %}
+                                  <div class="alert alert-danger" role="alert">Request Failed</div>
+                                  {% elif requestsuccess == 0 %}
+                                  <div class="alert alert-success" role="alert">Request Successed</div>
+                                  {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5> Request </h5>
+                        </div>
+                        <div class="card-body table-border-style">
+                            <div class="table-responsive">
+                                <table class="table table-hover" id="Table2">
+                                    <thead>
+                                        <tr class="header">
+                                            <th>ID</th>
+                                            <th>User</th>
+                                            <th>QTY</th>
+                                            <th>Date</th>
+                                            <th>Receiver</th>
+                                            <th>File</th>
+                                            <th>Remark</th>
+                                            <th>wm</th>
+                                            <th>bos</th>
+                                            
+                                            <th>GSP CMD</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for spare in spareOutRequest %}
+                                        {% if spare.submitByWm == False %}
+                                        <tr>
+                                            <td>{{spare.id}}</td>
+                                            <td>{{spare.userOutRequestor}}</td>
+                                            <td>{{spare.outqty}}</td>
+                                            <td>{{spare.outDate}}</td>
+                                            <td>{{spare.outReceiver}}</td>
+                                            <td><a href="/static/mediaurl/{{spare.file}}" download="/static/mediaurl/{{spare.file}}">{{spare.file}}</a></td>
+                                            <td>{{spare.outRemark}}</td>
+                                            <td>{{spare.submitByWm}}</td>
+                                            <td>{{spare.submitByBoss}} {{spare.gsp}} {{spare.gspuser}}</td>
+                                            <td>
+                                                {% csrf_token %}
+                                                <form action="" method="get">
+                                                    
+                                                    <input type="text" value="{{spare.id}}" style="display: none;" name="mytextbox" size="1"/>
+                                                    {% if request.user.role == 3 or request.user.role == 4 %}
+                                                    <input type="text" name="mygspbox" size="6"/>
+                                                    <input type="submit" class="btn  btn-success" value="Boss Submit" name="mybtn">
+                                                    {% endif %}
+                                                    {% if request.user.role == 2 or request.user.role == 4 %}
+                                                    <input type="submit" class="btn  btn-success" value="WM Submit" name="mybtn2">
+                                                    {% endif %}
+                                                    {% if request.user == d.userOutRequest or request.user.role == 4 %}
+                                                    <input type="submit" class="btn  btn-danger" value="Delete" name="deletebtn" style="color:rgb(255, 255, 255) ;">
+                                                    {% endif %}
+                                                </form>
+                                            </td>
+                                        </tr>
+                                        {% endif %}
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                </div>
+                </div>
+            </div>
+        </div>
+        
+            </div>
+            <!-- [ Main Content ] end -->
+        </div>
+    </section>
+    <!-- [ Main Content ] end -->
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}
+
+{% endblock javascripts %}
+

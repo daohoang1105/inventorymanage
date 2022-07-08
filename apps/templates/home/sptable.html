@@ -1,0 +1,178 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} UI Tables {% endblock %} 
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}
+<style>
+    #myTables tr {
+    display: none;
+    }
+    #pagination ul li {
+    display: inline;
+    margin-left: 10px;
+    width: 100%;
+    }
+</style>
+{% endblock stylesheets %}
+
+{% block content %}
+
+    <!-- [ Main Content ] start -->
+    <section class="pcoded-main-container">
+        <div class="pcoded-content">
+            <!-- [ breadcrumb ] start -->
+            <div class="page-header">
+                <div class="page-block">
+                    <div class="row align-items-center">
+                        <div class="col-md-12">
+                            <div class="page-header-title">
+                                <h5 class="m-b-10">Spare Part Tables</h5>
+                            </div>
+                            <ul class="breadcrumb">
+                                <li class="breadcrumb-item"><a href="/"><i class="feather icon-home"></i></a></li>
+                                <li class="breadcrumb-item"><a href="#">Spare Part Table</a></li>
+                                <li class="breadcrumb-item"><a href="#">All Spare Part Tables</a></li>
+                                <li class="breadcrumb-item">
+                                    <span class="" type="text" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="color: rgb(52, 156, 211);"> More tables <i class="feather icon-more-horizontal"></i></span>
+                                    <div class="dropdown-menu">
+                                        <a class="dropdown-item" href="{% url 'sptable' %}">Total</a>
+                                        <a class="dropdown-item" href="{% url 'sptablegoodnew' %}">Good and New</a>
+                                        <a class="dropdown-item" href="{% url 'sptablefailscrap' %}">Fail and Scrap</a>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- [ breadcrumb ] end -->
+            <!-- [ Main Content ] start -->
+            <div class="row">
+                <!-- [ Hover-table ] start -->
+                <div class="col-xl-12">
+                    <div class="card">
+                        <div class="card-header">
+                            Total Spare Part <a href="{% url 'exportcsv' %}" style="float:right;">Export to CSV <i class="feather icon-external-link"></i></a>
+                        </div>
+                    
+                        <div class="card-body text-center">
+                            <div class="row justify-content-center">
+                                <div class="col-sm-6">
+                                    <input type="text" id="icon-search" class="form-control mb-4" onkeyup="searchTableColumns()" placeholder="search . . ">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body table-border-style">
+                            <div class="table-responsive">
+                                <table class="table table-hover" id="myTable">
+                                    <thead>
+                                        <tr class="header">
+                                            <th>ID</th>
+                                            <th>Part Code</th>
+                                            <th>Status</th>
+                                            <th>SP Type</th>
+                                            <th>CSCE HWMO</th>
+                                            <th>SN</th>
+                                            <!-- <th>Description</th> -->
+                                            <th>Deliver Date</th>
+                                            <th>Warehouse</th>
+                                            <th>act QTY</th>
+                                            <th>con QTY</th>
+                                            <th>rem QTY</th>
+                                            <th>remark</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for d in sp %}
+                                        <tr>
+                                            <td><a href="{% url 'spmanage' d.id %}">{{d.id}}</a></td>
+                                            <td>{{d.partCode}}</td>
+                                            <td>{{d.goodStatus}}</td>
+                                            <td>{{d.sparePartType}}</td>
+                                            <td>{{d.csceHWMO}}</td>
+                                            <td>{{d.serialNumber}}</td>
+                                            <!-- <td data-table-header="Product Description">{{d.productDescription}}</td> -->
+                                            <td>{{d.deliverDate}}</td>
+                                            <td>{{d.warehouse}}</td>
+                                         
+                                            <!-- <td data-table-header="sender">{{d.sender}}</td>
+                                            <td data-table-header="invoice">{{d.invoice}}</td>
+                                            <td data-table-header="batch">{{d.batch}}</td>
+                                            <td data-table-header="transit Way">{{d.transitWay}}</td> -->
+                                            
+                                            <td>{{d.actualQTY}}</td>
+                                            <td>{{d.consumQTY}}</td>
+                                            <td>{{d.remainQTY}}</td>
+                                            <td>{{d.remark}}</td>
+                                            </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div><br><br>
+                            <center><div id="pagination"></div></center>
+
+                        </div>
+                    </div>
+                </div>
+                <!-- [ Hover-table ] end -->
+            </div>
+            <!-- [ Main Content ] end -->
+        </div>
+    </section>
+    <!-- [ Main Content ] end -->
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}
+<script>
+function searchTableColumns() {
+      // Declare variables 
+      var input, filter, table, tr, i, j, column_length, count_td;
+      column_length = document.getElementById('myTable').rows[0].cells.length;
+      input = document.getElementById("icon-search");
+      filter = input.value.toUpperCase();
+      table = document.getElementById("myTable");
+      tr = table.getElementsByTagName("tr");
+      for (i = 1; i < tr.length; i++) { // except first(heading) row
+        count_td = 0;
+        for(j = 1; j < column_length-1; j++){ // except first column
+            td = tr[i].getElementsByTagName("td")[j];
+            /* ADD columns here that you want you to filter to be used on */
+            if (td) {
+              if ( td.innerHTML.toUpperCase().indexOf(filter) > -1)  {            
+                count_td++;
+              }
+            }
+        }
+        if(count_td > 0){
+            tr[i].style.display = "";
+        } else {
+            tr[i].style.display = "none";
+        }
+      }
+      
+    }
+</script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script src="https://pagination.js.org/dist/2.1.4/pagination.min.js"></script>
+<script>
+let rows = []
+    $('table tbody tr').each(function(i, row) {
+        return rows.push(row);
+    });
+    
+    $('#pagination').pagination({
+        dataSource: rows,
+        pageSize: 10,
+        callback: function(data, apagination) {
+            $('tbody').html(data);
+        }
+    })
+</script>
+<script src="https://appsrv1-147a1.kxcdn.com/gradient/js/vendor-all.min.js"></script>
+<script src="https://appsrv1-147a1.kxcdn.com/gradient/js/plugins/bootstrap.min.js"></script>
+<script src="https://appsrv1-147a1.kxcdn.com/gradient/js/pcoded.min.js"></script>
+{% endblock javascripts %}
+
